@@ -18,7 +18,6 @@ class Ball {
    method void draw() {
       do Screen.setColor(true);
       do Screen.drawRectangle(x, y, x + size, y + size);
-      s
       return;
    }
    
