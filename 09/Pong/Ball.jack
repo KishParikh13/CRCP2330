@@ -1,0 +1,68 @@
+class Ball {
+
+   field int x;
+   field int y;
+   field int size;
+   field int speed;
+
+   constructor Ball new(int xBall, int yBall, int sizeBall) {
+      let x = xBall;
+      let y = yBall;
+      let size = sizeBall;
+      let speed = 1;
+
+      do draw();
+      return this;
+   }
+
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+      s
+      return;
+   }
+   
+   method int getX() {
+		return x;
+   }
+   
+   method int getY() {
+		return y;
+   }
+   
+   method void move(int speed) {
+
+		if(y < 20) { 
+			let speed = 1;
+		}
+      
+		if((y + size) > 260) {
+			let speed = -1;
+		}
+
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x, y, x + size, y + size);
+
+		let y = y + speed;
+		let x = x + speed;
+
+		do draw();
+		return;
+   }
+
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   method void reset() {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+
+      let x = 260;
+      let y = 130;
+
+      return;
+   }
+   
+}

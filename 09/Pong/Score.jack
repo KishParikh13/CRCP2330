@@ -1,0 +1,40 @@
+class Score {
+
+	field int x;
+   field int y;
+	field int score;
+	field int id;
+
+   constructor Score new(int xScore, int idIn) {
+      let x = xScore;
+      let y = 1;
+      let score = 0;
+      let id = idIn;
+
+      do draw();
+      return this;
+   }
+
+   method void draw() {
+      do Output.moveCursor(y, x);
+      do Output.printString("PLAYER ");
+      do Output.printInt(id);
+      do Output.printString( " – ");
+      do Output.printInt(score);
+
+      /** should be "PLAYER 1 – 67" */
+
+      return;
+   }
+
+   method void increment(){
+		let score = score + 1;
+		return;
+   }
+
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+	
+}

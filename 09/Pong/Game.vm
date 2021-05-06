@@ -1,0 +1,306 @@
+function Game.new 0
+push constant 11
+call Memory.alloc 1
+pop pointer 0
+push constant 254
+push constant 125
+push constant 5
+call Ball.new 3
+pop this 0
+push constant 10
+call Paddle.new 1
+pop this 1
+push constant 500
+call Paddle.new 1
+pop this 2
+push constant 10
+push constant 1
+call Score.new 2
+pop this 3
+push constant 40
+push constant 2
+call Score.new 2
+pop this 4
+push constant 254
+pop this 7
+push this 1
+call Paddle.getY 1
+pop this 8
+push this 2
+call Paddle.getY 1
+pop this 9
+push constant 1
+pop this 10
+push pointer 0
+return
+function Game.dispose 0
+push argument 0
+pop pointer 0
+push this 1
+call Paddle.dispose 1
+pop temp 0
+push this 2
+call Paddle.dispose 1
+pop temp 0
+push this 3
+call Score.dispose 1
+pop temp 0
+push this 4
+call Score.dispose 1
+pop temp 0
+push this 0
+call Ball.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Game.draw 0
+push argument 0
+pop pointer 0
+push this 10
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 1
+call Paddle.paddleUp 1
+pop temp 0
+label IF_FALSE0
+push this 10
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 1
+call Paddle.paddleDown 1
+pop temp 0
+label IF_FALSE1
+push this 5
+push constant 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 2
+call Paddle.paddleUp 1
+pop temp 0
+label IF_FALSE2
+push this 5
+push constant 2
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 2
+call Paddle.paddleDown 1
+pop temp 0
+label IF_FALSE3
+push constant 7
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function Game.moveBall 3
+push argument 0
+pop pointer 0
+push this 0
+call Ball.checkx 1
+pop this 7
+push argument 1
+pop local 1
+push argument 2
+pop local 2
+push this 0
+call Ball.checky 1
+pop local 0
+push this 7
+push constant 10
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push local 1
+gt
+push local 0
+push local 1
+push constant 40
+add
+lt
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+pop this 10
+goto IF_END1
+label IF_FALSE1
+push this 4
+call Score.increment 1
+pop temp 0
+push this 4
+call Score.draw 1
+pop temp 0
+push this 0
+call Ball.reset 1
+pop temp 0
+push constant 1
+neg
+pop this 10
+label IF_END1
+label IF_FALSE0
+push this 7
+push constant 500
+gt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 0
+push local 2
+gt
+push local 0
+push local 2
+push constant 40
+add
+lt
+and
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 1
+neg
+pop this 10
+goto IF_END3
+label IF_FALSE3
+push this 3
+call Score.increment 1
+pop temp 0
+push this 3
+call Score.draw 1
+pop temp 0
+push this 0
+call Ball.reset 1
+pop temp 0
+push constant 1
+pop this 10
+label IF_END3
+label IF_FALSE2
+push this 0
+push this 10
+call Ball.move 2
+pop temp 0
+push constant 0
+return
+function Game.play 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+push this 1
+call Paddle.getY 1
+pop this 8
+push this 2
+call Paddle.getY 1
+pop this 9
+push pointer 0
+call Game.draw 1
+pop temp 0
+push pointer 0
+push this 8
+push this 9
+call Game.moveBall 3
+pop temp 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+label IF_FALSE0
+push local 0
+push constant 87
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 1
+pop this 10
+label IF_FALSE1
+push local 0
+push constant 83
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 2
+pop this 10
+label IF_FALSE2
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 1
+pop this 5
+label IF_FALSE3
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 2
+pop this 5
+label IF_FALSE4
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+push this 1
+call Paddle.getY 1
+pop this 8
+push this 2
+call Paddle.getY 1
+pop this 9
+push pointer 0
+call Game.draw 1
+pop temp 0
+push pointer 0
+push this 8
+push this 9
+call Game.moveBall 3
+pop temp 0
+goto WHILE_EXP2
+label WHILE_END2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

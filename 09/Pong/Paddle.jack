@@ -1,0 +1,59 @@
+class Paddle {
+
+  field int x;
+  field int y;
+  field int w;
+  field int l;
+  
+  constructor Paddle new(int xPaddle) {
+    let x = xPaddle;
+    let y = 20;
+
+    let w = 5;
+    let l = 35;
+
+    do draw();
+
+    return this;
+  }
+   
+  method void draw() {
+    do Screen.setColor(true);
+    do Screen.drawRectangle(x, y, x + w, y + l);
+    return;
+  }
+   
+  method int getY() {
+    return y;
+  }
+   
+  method void paddleUp() {
+    if (y > 20) {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + w, y + l);
+
+      let y = y - 3;
+      do draw();
+    }
+
+    return;
+  }
+
+  method void paddleDown() {
+    if ((l + y) < 260) {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + w, y + l);
+
+      let y = y + 3;
+      do draw();
+    }
+
+    return;
+  }
+
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+
+}

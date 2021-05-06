@@ -1,0 +1,148 @@
+ class Game {
+   
+  field Paddle playerOne;
+  field Paddle playerTwo;
+
+  field Ball ball;
+
+  field Score playerOneScore; 
+  field Score playerTwoScore;
+
+  field int playerOneInt, playerTwoInt;
+  field int ballPos, playerOnePaddlePos, playerTwoPaddlePos;
+  field int dir;
+
+  constructor Game new() {
+    
+    let playerOne = Paddle.new(10);
+    let playerTwo = Paddle.new(500);
+
+    let ball = Ball.new(2100,130,5);
+
+    let playerOneScore = Score.new(20, 1);
+    let playerTwoScore = Score.new(40, 2);
+    let ballPos = 2100;
+    let playerOnePaddlePos = playerOne.getY();
+    let playerTwoPaddlePos = playerTwo.getY();
+    let dir = 1;
+
+    return this;
+  }
+
+  method void draw() {
+
+    if (playerOneInt = 1)  {
+      do playerOne.paddleUp();
+    }
+    if (playerOneInt = 2)  {
+      do playerOne.paddleDown();
+    }
+    if (playerTwoInt = 1) {
+      do playerTwo.paddleUp();
+    }
+    if (playerTwoInt = 2) {
+      do playerTwo.paddleDown();
+    }
+
+    do Sys.wait(7);
+    return;
+  }
+
+  method void moveBall(int pOnePos, int pTwoPos){
+
+    var int bally, paddleY, playerTwoPaddlePos;
+    let ballPos = ball.getX();
+    
+    let paddleY = pOnePos;              
+    let playerTwoPaddlePos = pTwoPos;
+    let bally = ball.getY();
+    
+    if(ballPos < 10) {
+      if ((bally > paddleY) & (bally < (paddleY + 40))){
+        let dir = 1;
+      } else {
+        do playerTwoScore.plusOne(); 
+        do playerTwoScore.draw();
+
+        do ball.reset();
+        let dir = -1;
+      }
+    }
+    
+    if(ballPos > 500) {
+      if ((bally > playerTwoPaddlePos) & (bally < (playerTwoPaddlePos+40))) {
+        let dir = -1;
+      } else {
+        do playerOneScore.plusOne();
+        do playerOneScore.draw();
+
+        do ball.reset();
+        let dir = 1;
+      }
+    }
+    do ball.move(dir);
+
+    return;
+  }
+      
+  method void play() {
+
+    var char input;
+    var boolean exit;
+    let exit = false;
+
+    while (~exit) {
+      while (input = 0) {
+
+        let input = inputboard.inputPressed();
+        let playerOnePaddlePos = playerOne.getY();
+        let playerTwoPaddlePos = playerTwo.getY();
+        do draw();
+
+        do moveBall(playerOnePaddlePos, playerTwoPaddlePos);
+
+      }
+
+      if (input = 81)  {
+        let exit = true;
+      }
+      if (input = 87)  {
+        let playerOneInt = 1;
+      }
+      if (input = 83)  {
+        let playerOneInt = 2;
+      }
+      if (input = 131) {
+        let playerTwoInt = 1;
+      }
+      if (input = 133) {
+        let playerTwoInt = 2;
+      }
+
+      while (~(input = 0)) {
+        let input = inputboard.inputPressed();
+        let playerOnePaddlePos = playerOne.getY();
+        let playerTwoPaddlePos = playerTwo.getY();
+
+        do draw();
+        do moveBall(playerOnePaddlePos, playerTwoPaddlePos);
+      }
+
+    }
+
+    return;
+  }
+
+  method void dispose() {
+    do playerOne.dispose();
+    do playerTwo.dispose();
+
+    do playerOneScore.dispose();
+    do playerTwoScore.dispose();
+
+    do ball.dispose();
+    do Memory.deAlloc(this);
+
+    return;
+  }
+}
