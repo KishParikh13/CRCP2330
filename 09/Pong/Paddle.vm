@@ -1,5 +1,5 @@
 function Paddle.new 0
-push constant 4
+push constant 5
 call Memory.alloc 1
 pop pointer 0
 push argument 0
@@ -38,7 +38,7 @@ add
 push this 1
 push this 3
 add
-call Screen.drawRectangle 4
+call Screen.drawRectangle 5
 pop temp 0
 push constant 0
 return
@@ -67,7 +67,7 @@ add
 push this 1
 push this 3
 add
-call Screen.drawRectangle 4
+call Screen.drawRectangle 5
 pop temp 0
 push this 1
 push constant 2
@@ -101,7 +101,7 @@ add
 push this 1
 push this 3
 add
-call Screen.drawRectangle 4
+call Screen.drawRectangle 5
 pop temp 0
 push this 1
 push constant 2
